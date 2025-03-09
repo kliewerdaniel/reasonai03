@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+/* Retro-futuristic Chat UI Styles */
+:root {
+  --neon-green: #00ff88;
+  --neon-pink: #ff00ff;
+  --neon-blue: #00ffff;
+  --neon-yellow: #ffff00;
+  --dark-bg: #050517;
+  --static-opacity: 0.04;
+  --glitch-strength: 3px;
+  --scanline-width: 2px;
+  --scanline-opacity: 0.07;
+  --vhs-color-shift: 2px;
+}
+
+/* TV Static Background for chat container */
+.retro-chat-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-chat-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: var(--static-opacity);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scanlines for content */
+.retro-scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-scanlines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(var(--scanline-width) - 1px),
+    rgba(0, 0, 0, var(--scanline-opacity)) var(--scanline-width),
+    transparent calc(var(--scanline-width) + 1px)
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Glitchy Text Effect for headings */
+.retro-glitch-text {
+  position: relative;
+  display: inline-block;
+  color: var(--neon-blue);
+  text-shadow: 
+    0 0 5px rgba(0, 255, 255, 0.8),
+    0 0 10px rgba(0, 255, 255, 0.5);
+  letter-spacing: 1px;
+}
+
+.retro-glitch-text::before,
+.retro-glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.retro-glitch-text::before {
+  color: var(--neon-pink);
+  z-index: -1;
+  transform: translate(var(--vhs-color-shift), var(--vhs-color-shift));
+  animation: glitchEffect 3s infinite alternate-reverse;
+}
+
+.retro-glitch-text::after {
+  color: var(--neon-green);
+  z-index: -2;
+  transform: translate(calc(-1 * var(--vhs-color-shift)), calc(-1 * var(--vhs-color-shift)));
+  animation: glitchEffect 2s infinite alternate-reverse;
+}
+
+@keyframes glitchEffect {
+  0% {
+    transform: translate(0);
+  }
+  5% {
+    transform: translate(calc(var(--glitch-strength) / 2), 0);
+  }
+  10% {
+    transform: translate(calc(-1 * var(--glitch-strength) / 2), 0);
+  }
+  15% { 
+    transform: translate(0);
+  }
+  100% { 
+    transform: translate(0);
+  }
+}
+
+/* Neon Borders and Elements */
+.retro-neon-border {
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, var(--neon-blue), var(--neon-pink)) 1;
+  box-shadow: 
+    0 0 5px rgba(0, 255, 255, 0.5),
+    0 0 15px rgba(255, 0, 255, 0.3);
+}
+
+.retro-neon-green-border {
+  border: 2px solid var(--neon-green);
+  box-shadow: 0 0 8px var(--neon-green);
+}
+
+.retro-neon-pink-border {
+  border: 2px solid var(--neon-pink);
+  box-shadow: 0 0 8px var(--neon-pink);
+}
+
+.retro-neon-blue-border {
+  border: 2px solid var(--neon-blue);
+  box-shadow: 0 0 8px var(--neon-blue);
+}
+
+/* Message Bubbles with glow effects */
+.retro-user-message {
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.15), rgba(0, 255, 136, 0.05));
+  border: 1px solid var(--neon-pink);
+  box-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.retro-assistant-message {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 255, 0.05));
+  border: 1px solid var(--neon-green);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.retro-reasoning-message {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 255, 0, 0.05));
+  border: 1px solid var(--neon-blue);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+/* Input area styling */
+.retro-input-area {
+  background-color: rgba(5, 5, 23, 0.7);
+  border-top: 1px solid var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.retro-textarea {
+  background-color: rgba(10, 10, 30, 0.6);
+  border: 1px solid var(--neon-green) !important;
+  color: white !important;
+  transition: all 0.3s ease;
+}
+
+.retro-textarea:focus {
+  box-shadow: 0 0 10px var(--neon-green) !important;
+  border-color: var(--neon-green) !important;
+}
+
+.retro-submit-button {
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.retro-submit-button:hover:not(:disabled) {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7) !important;
+  transform: scale(1.05) !important;
+}
+
+.retro-submit-button:disabled {
+  background: linear-gradient(135deg, #666, #444) !important;
+  opacity: 0.7 !important;
+}
+
+/* Selection and model dropdown */
+.retro-select {
+  background-color: rgba(10, 10, 30, 0.6) !important;
+  border: 1px solid var(--neon-blue) !important;
+  color: white !important;
+  box-shadow: 0 0 5px rgba(0, 255, 255, 0.5) !important;
+}
+
+.retro-select:focus {
+  box-shadow: 0 0 10px var(--neon-blue) !important;
+}
+
+/* Initial welcome container with futuristic grid */
+.retro-welcome-container {
+  position: relative;
+  background: linear-gradient(135deg, rgba(5, 5, 23, 0.8), rgba(20, 0, 30, 0.8));
+  border: 1px solid var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.retro-welcome-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.retro-welcome-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Avatar styling */
+.retro-avatar {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 255, 0.1)) !important;
+  border: 1px solid var(--neon-green) !important;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.4) !important;
+}
+
+.retro-user-avatar {
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.1)) !important;
+  border: 1px solid var(--neon-pink) !important;
+  box-shadow: 0 0 8px rgba(255, 0, 255, 0.4) !important;
+}
+
+.retro-reasoning-avatar {
+  background: linear-gradient(135deg, rgba(255, 255, 0, 0.2), rgba(0, 255, 255, 0.1)) !important;
+  border: 1px solid var(--neon-yellow) !important;
+  box-shadow: 0 0 8px rgba(255, 255, 0, 0.3) !important;
+}
+
+/* Scroll to bottom button */
+.retro-scroll-button {
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue)) !important;
+  border: none !important;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) !important;
+}
+
+.retro-scroll-button:hover {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.8) !important;
+  transform: scale(1.1) !important;
+}
+
+/* Animated loading dots */
+.retro-loading-dots {
+  display: flex;
+}
+
+.retro-loading-dots div {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background-color: var(--neon-green);
+  animation: retro-pulse 1.5s infinite ease-in-out;
+}
+
+.retro-loading-dots div:nth-child(2) {
+  animation-delay: 0.2s;
+  background-color: var(--neon-blue);
+}
+
+.retro-loading-dots div:nth-child(3) {
+  animation-delay: 0.4s;
+  background-color: var(--neon-pink);
+}
+
+@keyframes retro-pulse {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Dark mode transitions */
+@media (prefers-color-scheme: dark) {
+  .retro-chat-container::before {
+    opacity: calc(var(--static-opacity) * 1.5);
+  }
+}
