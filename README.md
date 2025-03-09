@@ -43,7 +43,7 @@ A powerful, privacy-focused AI agent framework built with Next.js and Ollama. Th
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/next-ollama-app.git
+git clone https://github.com/kliewerdaniel/reasonai03.git
 cd next-ollama-app
 ```
 
